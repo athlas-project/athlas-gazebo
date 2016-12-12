@@ -5,11 +5,50 @@
 	<xacro:property name="CoG_${prefix}" value="CoG"/>
 </xacro:macro>
 
-<xacro:macro name="inertia" params="prefix ixx ixy ixz iyy izz">
+<xacro:macro name="inertia" params="prefix ixx ixy ixz iyy iyz izz">
 	<xacro:property name="ixx_${prefix}" value="ixx"/>
 	<xacro:property name="ixy_${prefix}" value="ixy"/>
 	<xacro:property name="ixz_${prefix}" value="ixz"/>
+	<xacro:property name="iyy_${prefix}" value="iyy"/>
+	<xacro:property name="iyz_${prefix}" value="iyz"/>
+	<xacro:property name="izz_${prefix}" value="izz"/>
 </xacro:macro>
+
+<xacro:macro name="joint_origin" params="prefix origin">
+	<xacro:property name="joint_origin_${prefix}" value="origin"/> 
+</xacro:macro>
+
+<!-- To be filled in with model data -->
+
+<!-- link specifications -->
+<xacro:mass_CoG prefix="main_body" mass="" CoG=""/>
+<xacro:inertia prefix="main_body" ixx="" ixy="" ixz="" iyy="" iyz="" izz=""/>
+
+<xacro:mass_CoG prefix="AD" mass="" CoG=""/>
+<xacro:inertia prefix="AD" ixx="" ixy="" ixz="" iyy="" iyz="" izz=""/>
+
+<xacro:mass_CoG prefix="BC" mass="" CoG=""/>
+<xacro:inertia prefix="BC" ixx="" ixy="" ixz="" iyy="" iyz="" izz=""/>
+
+<xacro:mass_CoG prefix="CD" mass="" CoG=""/>
+<xacro:inertia prefix="CD" ixx="" ixy="" ixz="" iyy="" iyz="" izz=""/>
+
+<xacro:mass_CoG prefix="DE" mass="" CoG=""/>
+<xacro:inertia prefix="DE" ixx="" ixy="" ixz="" iyy="" iyz="" izz=""/>
+
+<xacro:mass_CoG prefix="foot" mass="" CoG=""/>
+<xacro:inertia prefix="foot" ixx="" ixy="" ixz="" iyy="" iyz="" izz=""/>
+
+<xacro:mass_CoG prefix="GC" mass="" CoG=""/>
+<xacro:inertia prefix="GC" ixx="" ixy="" ixz="" iyy="" iyz="" izz=""/>
+
+<!-- joint specifications -->
+<xacro:joint_origin prefix="A" origin=""/>
+<xacro:joint_origin prefix="B" origin=""/>
+<xacro:joint_origin prefix="C" origin=""/>
+<xacro:joint_origin prefix="D" origin=""/>
+<xacro:joint_origin prefix="E" origin=""/>
+<xacro:joint_origin prefix="G" origin=""/>
 
 <!-- <xacro:property name="mass_ABC" value=""/>
 <xacro:property name="mass_CDE" value=""/>
@@ -22,16 +61,43 @@
 
 <xacro:macro name="leg" params="prefix reflect rotate">
 
+	<!-- definition of bar AD -->
+	<joint name="leg_${prefix}_joint_A">
+		<parent link="main_body"/>
+		<child link="leg_${prefix}_link_AD"/>
+		<origin xyz="joint_origin_A"/>
+	</joint>
+
+	<link name="leg_${prefix}_link_AD">
+		<inertial>
+			<mass value="mass_AD" />
+			<inertia ixx="ixx_AD" ixy="ixy_AD" ixz="ixz_AD" iyy="iyy_AD" iyz="iyz_AD" izz="izz_AD" />
+		</inertial>
+
+		<visual>
+			<geometry>
+
+			</geometry>
+			<origin xyz="" rpy=""/>
+		</visual>
+
+		<collision>
+			<geometry>
+
+			</geometry>
+		</collision>
+	</link>
+	<!-- definition of all other links and joints -->
 	<joint name="leg_${prefix}_joint_B">
 		<parent link="main_body"/>
 		<child link="leg_${prefix}_link_BC"/>
-		<origin xyz=""/>
+		<origin xyz="joint_origin_B"/>
 	</joint>
 
 	<link name="leg_${prefix}_link_BC">
 		<inertial>
 			<mass value="mass_BC" />
-			<inertia ixx="" ixy="" ixz="" iyy="" izz="" />
+			<inertia ixx="ixx_BC" ixy="ixy_BC" ixz="ixz_BC" iyy="iyy_BC" iyz="iyz_BC" izz="izz_BC" />
 		</inertial>
 
 		<visual>
@@ -50,14 +116,14 @@
 
 	<joint name="leg_${prefix}_joint_C">
 		<parent link="leg_${prefix}_link_BC"/>
-		<child link="leg_${prefix}_link_CDE"/>
-		<origin xyz=""/>
+		<child link="leg_${prefix}_link_CD"/>
+		<origin xyz="joint_origin_C"/>
 	</joint>
 
-	<link name="leg_${prefix}_link_CDE">
+	<link name="leg_${prefix}_link_CD">
 		<inertial>
-			<mass value="" />
-			<inertia ixx="" ixy="" ixz="" iyy="" izz="" />
+			<mass value="mass_CD" />
+			<inertia ixx="ixx_CD" ixy="ixy_CD" ixz="ixz_CD" iyy="iyy_CD" iyz="iyz_CD" izz="izz_CD" />
 		</inertial>
 
 		<visual>
@@ -75,15 +141,15 @@
 	</link>
 
 	<joint name="leg_${prefix}_joint_D">
-		<parent link="leg_${prefix}_link_CDE"/>
-		<child link="leg_${prefix}_link_DA"/>
-		<origin xyz=""/>
+		<parent link="leg_${prefix}_link_CD"/>
+		<child link="leg_${prefix}_link_DE"/>
+		<origin xyz="joint_origin_D"/>
 	</joint>
 
-	<link name="leg_${prefix}_link_DA">
+	<link name="leg_${prefix}_link_DE">
 		<inertial>
-			<mass value="" />
-			<inertia ixx="" ixy="" ixz="" iyy="" izz="" />
+			<mass value="mass_DE" />
+			<inertia ixx="ixx_DE" ixy="ixy_DE" ixz="ixz_DE" iyy="iyy_DE" iyz="iyz_DE" izz="izz_DE" />
 		</inertial>
 
 		<visual>
@@ -103,13 +169,40 @@
 	<joint name="leg_${prefix}_joint_E">
 		<parent link="leg_${prefix}_link_CDE"/>
 		<child link="leg_${prefix}_link_foot"/>
-		<origin xyz=""/>
+		<origin xyz="joint_origin_E"/>
 	</joint>
 
 	<link name="leg_${prefix}_link_foot">
 		<inertial>
-			<mass value="" />
-			<inertia ixx="" ixy="" ixz="" iyy="" izz="" />
+			<mass value="mass_foot" />
+			<inertia ixx="ixx_foot" ixy="ixy_foot" ixz="ixz_foot" iyy="iyy_foot" iyz="iyz_foot" izz="izz_foot" />
+		</inertial>
+
+		<visual>
+			<geometry>
+
+			</geometry>
+			<origin xyz="" rpy=""/>
+		</visual>
+
+		<collision>
+			<geometry>
+
+			</geometry>
+		</collision>
+	</link>
+
+	<!-- definition of GC -->
+	<joint name="leg_${prefix}_joint_G">
+		<parent link="main_body"/>
+		<child link="leg_${prefix}_link_GC"/>
+		<origin xyz="joint_origin_G"/>
+	</joint>
+
+	<link name="leg_${prefix}_link_GC">
+		<inertial>
+			<mass value="mass_GC" />
+			<inertia ixx="ixx_GC" ixy="ixy_GC" ixz="ixz_GC" iyy="iyy_GC" iyz="iyz_GC" izz="izz_GC" />
 		</inertial>
 
 		<visual>
@@ -129,6 +222,7 @@
 
 
 
+
 </xacro:macro>
 
 
@@ -138,8 +232,8 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="athlas_heli">
 	<link name="main_body">
 		<inertial>
-			<mass value="" />
-			<inertia ixx="" ixy="" ixz="" iyy="" izz="" />
+			<mass value="mass_main_body" />
+			<inertia ixx="ixx_main_body" ixy="ixy_main_body" ixz="ixz_main_body" iyy="iyy_main_body" iyz="iyz_main_body" izz="izz_main_body" />
 		</inertial>
 
 		<visual>
