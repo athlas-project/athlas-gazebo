@@ -1,0 +1,165 @@
+
+<!--parameter definitions --> 
+<xacro:macro name="mass_CoG" params="prefix mass CoG">
+	<xacro:property name="mass_${prefix}" value="mass"/>
+	<xacro:property name="CoG_${prefix}" value="CoG"/>
+</xacro:macro>
+
+<xacro:macro name="inertia" params="prefix ixx ixy ixz iyy izz">
+	<xacro:property name="ixx_${prefix}" value="ixx"/>
+	<xacro:property name="ixy_${prefix}" value="ixy"/>
+	<xacro:property name="ixz_${prefix}" value="ixz"/>
+</xacro:macro>
+
+<!-- <xacro:property name="mass_ABC" value=""/>
+<xacro:property name="mass_CDE" value=""/>
+<xacro:property name="mass_DA" value=""/>
+<xacro:property name="mass_E" value=""/>
+<xacro:property name="" value=""/>
+-->
+
+<!-- leg macro -->
+
+<xacro:macro name="leg" params="prefix reflect rotate">
+
+	<joint name="leg_${prefix}_joint_B">
+		<parent link="main_body"/>
+		<child link="leg_${prefix}_link_BC"/>
+		<origin xyz=""/>
+	</joint>
+
+	<link name="leg_${prefix}_link_BC">
+		<inertial>
+			<mass value="mass_BC" />
+			<inertia ixx="" ixy="" ixz="" iyy="" izz="" />
+		</inertial>
+
+		<visual>
+			<geometry>
+
+			</geometry>
+			<origin xyz="" rpy=""/>
+		</visual>
+
+		<collision>
+			<geometry>
+
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="leg_${prefix}_joint_C">
+		<parent link="leg_${prefix}_link_BC"/>
+		<child link="leg_${prefix}_link_CDE"/>
+		<origin xyz=""/>
+	</joint>
+
+	<link name="leg_${prefix}_link_CDE">
+		<inertial>
+			<mass value="" />
+			<inertia ixx="" ixy="" ixz="" iyy="" izz="" />
+		</inertial>
+
+		<visual>
+			<geometry>
+
+			</geometry>
+			<origin xyz="" rpy=""/>
+		</visual>
+
+		<collision>
+			<geometry>
+
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="leg_${prefix}_joint_D">
+		<parent link="leg_${prefix}_link_CDE"/>
+		<child link="leg_${prefix}_link_DA"/>
+		<origin xyz=""/>
+	</joint>
+
+	<link name="leg_${prefix}_link_DA">
+		<inertial>
+			<mass value="" />
+			<inertia ixx="" ixy="" ixz="" iyy="" izz="" />
+		</inertial>
+
+		<visual>
+			<geometry>
+
+			</geometry>
+			<origin xyz="" rpy=""/>
+		</visual>
+
+		<collision>
+			<geometry>
+
+			</geometry>
+		</collision>
+	</link>
+
+	<joint name="leg_${prefix}_joint_E">
+		<parent link="leg_${prefix}_link_CDE"/>
+		<child link="leg_${prefix}_link_foot"/>
+		<origin xyz=""/>
+	</joint>
+
+	<link name="leg_${prefix}_link_foot">
+		<inertial>
+			<mass value="" />
+			<inertia ixx="" ixy="" ixz="" iyy="" izz="" />
+		</inertial>
+
+		<visual>
+			<geometry>
+
+			</geometry>
+			<origin xyz="" rpy=""/>
+		</visual>
+
+		<collision>
+			<geometry>
+
+			</geometry>
+		</collision>
+	</link>
+
+
+
+
+</xacro:macro>
+
+
+
+<!-- robot definition -->
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="athlas_heli">
+	<link name="main_body">
+		<inertial>
+			<mass value="" />
+			<inertia ixx="" ixy="" ixz="" iyy="" izz="" />
+		</inertial>
+
+		<visual>
+			<geometry>
+
+			</geometry>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+		</visual>
+
+		<collision>
+			<geometry>
+
+			</geometry>
+		</collision>
+	</link>
+
+	<xacro:leg prefix="front_left" reflect="" rotate="" />
+	<xacro:leg prefix="front_right" reflect="" rotate="" />
+	<xacro:leg prefix="back_left" reflect="" rotate="" />
+	<xacro:leg prefix="back_right" reflect="" rotate="" />
+
+</robot>
+
