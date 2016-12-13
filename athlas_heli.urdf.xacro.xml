@@ -30,11 +30,8 @@
 <xacro:mass_CoG prefix="BC" mass="" CoG=""/>
 <xacro:inertia prefix="BC" ixx="" ixy="" ixz="" iyy="" iyz="" izz=""/>
 
-<xacro:mass_CoG prefix="CD" mass="" CoG=""/>
-<xacro:inertia prefix="CD" ixx="" ixy="" ixz="" iyy="" iyz="" izz=""/>
-
-<xacro:mass_CoG prefix="DE" mass="" CoG=""/>
-<xacro:inertia prefix="DE" ixx="" ixy="" ixz="" iyy="" iyz="" izz=""/>
+<xacro:mass_CoG prefix="CDE" mass="" CoG=""/>
+<xacro:inertia prefix="CDE" ixx="" ixy="" ixz="" iyy="" iyz="" izz=""/>
 
 <xacro:mass_CoG prefix="foot" mass="" CoG=""/>
 <xacro:inertia prefix="foot" ixx="" ixy="" ixz="" iyy="" iyz="" izz=""/>
@@ -45,7 +42,8 @@
 <!-- joint specifications -->
 <xacro:joint_origin prefix="A" origin=""/>
 <xacro:joint_origin prefix="B" origin=""/>
-<xacro:joint_origin prefix="C" origin=""/>
+<xacro:joint_origin prefix="C1" origin=""/>
+<xacro:joint_origin prefix="C2" origin=""/>
 <xacro:joint_origin prefix="D" origin=""/>
 <xacro:joint_origin prefix="E" origin=""/>
 <xacro:joint_origin prefix="G" origin=""/>
